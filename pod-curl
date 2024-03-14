@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Check if Docker is installed
+if ! command -v docker &> /dev/null; then
+    echo "Docker is not installed or not in PATH. Please install Docker."
+    exit 1
+fi
+
+# Check if the container exists
+if ! docker ps -a --format '{{.Names}}' | grep -q '^cka-control-plane$'; then
+    echo "The container 'cka-control-plane' does not exist."
+    exit 1
+fi
+
+# Get the command from the user
+read -p "Enter the command to run inside the container: " user_command
+
+# Run the command inside the container
+docker exec -it cka-control-plane bash -c "$user_command"
