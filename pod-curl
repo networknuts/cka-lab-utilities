@@ -13,7 +13,7 @@ if ! docker ps -a --format '{{.Names}}' | grep -q '^cka-control-plane$'; then
 fi
 
 # Get the command from the user
-read -p "Enter the command to run inside the container: " user_command
+read -p "Enter the pod URL or IP: " user_command
 
 # Run the command inside the container
-docker exec -it cka-control-plane bash -c "$user_command"
+docker exec -it cka-control-plane bash -c "curl $user_command"
